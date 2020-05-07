@@ -4,7 +4,7 @@
 #include <vector>
 #include <iostream>
 #include "linux_parser.h"
-
+#include<sstream>
 using std::stof;
 using std::string;
 using std::to_string;
@@ -112,17 +112,72 @@ long LinuxParser::UpTime() {
 }
 
 // TODO: Read and return the number of jiffies for the system
-long LinuxParser::Jiffies() { return 0; }
+long LinuxParser::Jiffies() { 
+  std::ifstream myfile(kProcDirectory + kStatFilename);
+  std::string line;
+  std::string command;
+  long value;
+  vector<long> jiffs;
+  if(myfile.is_open()){
+    std::getline(myfile, line);
+    std::istringstream lineparser(line);
+    if(lineparser>>command){
+      for(value; lineparser>>value;){
+        jiffs.push_back(value);
+      }
+    }
+      
+  }
+  long total_jiffies=0;
+  // sum of first four jiffies (user, niced, system, idle) 
+  for(int i=0;i<4;++i){
+    total_jiffies+=jiffs[i];
+  }
+  return total_jiffies;
+  
+}
 
 // TODO: Read and return the number of active jiffies for a PID
 // REMOVE: [[maybe_unused]] once you define the function
 long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
 
 // TODO: Read and return the number of active jiffies for the system
-long LinuxParser::ActiveJiffies() { return 0; }
+long LinuxParser::ActiveJiffies() { 
+  std::ifstream myfile(kProcDirectory + kStatFilename);
+  std::string line;
+  std::string command;
+  long value1, value2, value3;
+  long active_jiff;
+  if(myfile.is_open()){
+    std::getline(myfile, line);
+    std::istringstream lineparser(line);
+    if(lineparser>>command>>value1>>value2>>value3){
+      active_jiff=value1+value2+value3;
+    }
+      
+  }
+  return active_jiff;
+  
+}
 
 // TODO: Read and return the number of idle jiffies for the system
-long LinuxParser::IdleJiffies() { return 0; }
+long LinuxParser::IdleJiffies() { 
+  std::ifstream myfile(kProcDirectory + kStatFilename);
+  std::string line;
+  std::string command;
+  long value1, value2, value3, value4, value5;
+  long idle_jiff;
+  if(myfile.is_open()){
+    std::getline(myfile, line);
+    std::istringstream lineparser(line);
+    if(lineparser>>command>>value1>>value2>>value3>>value4){
+      idle_jiff=value4;
+    }
+      
+  }
+  return idle_jiff;
+  
+}
 
 // TODO: Read and return CPU utilization
 vector<string> LinuxParser::CpuUtilization() { return {}; }

@@ -7,6 +7,8 @@ class Processor {
 
   // TODO: Declare any necessary private members
  private:
+    long pre_active_jiffs{0};
+    long pre_total_jiffs{0};
 };
 
 #endif
