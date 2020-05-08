@@ -366,6 +366,8 @@ long LinuxParser::UpTime(int pid) {
   vector<string> stime=cpu_times(pid);
   //std::cout<<"check commands "<<stime[0]<<" "<<stime[1]<<"\n";
   long starttime=stoi(stime[21]);
+  long uptime=UpTime();
+  long process_time=uptime-starttime/hertz;
   // return in seconds
-  return starttime;
+  return process_time;
 }
