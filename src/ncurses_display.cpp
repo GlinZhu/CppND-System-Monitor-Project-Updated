@@ -14,10 +14,11 @@ using std::to_string;
 // 50 bars uniformly displayed from 0 - 100 %
 // 2% is one bar(|)
 std::string NCursesDisplay::ProgressBar(float percent) {
-  std::string result{"0%"};
+  std::string result{};
   int size{50};
   float bars{percent * size};
-
+  std::string res=to_string(percent * 100).substr(0, 3);
+  result=res+"%";
   for (int i{0}; i < size; ++i) {
     result += i <= bars ? '|' : ' ';
   }
@@ -25,6 +26,7 @@ std::string NCursesDisplay::ProgressBar(float percent) {
   string display{to_string(percent * 100).substr(0, 4)};
   if (percent < 0.1 || percent == 1.0)
     display = " " + to_string(percent * 100).substr(0, 3);
+  
   return result + " " + display + "/100%";
 }
 
