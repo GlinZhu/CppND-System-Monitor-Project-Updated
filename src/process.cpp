@@ -30,7 +30,9 @@ string Process::Command() { return LinuxParser::Command(this->pid); }
 // TODO: Return this process's memory utilization
 string Process::Ram() { 
     string ram_size=LinuxParser::Ram(this->pid);
-    long int ram=stoi(ram_size);
+    long int ram{0};
+    if(!ram_size.empty())
+        ram=stol(ram_size);
     int ramf=ram/1024; //convert to Mb from kb
     this->ram_size=ramf;
     return to_string(ramf);

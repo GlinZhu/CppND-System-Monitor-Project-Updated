@@ -111,16 +111,20 @@ void NCursesDisplay::Display(System& system, int n) {
   endwin();
  
   /*
-  std::vector<Process> processes=system.Processes();
-  for (int i = 0; i < 15; ++i) {
-    to_string(processes[i].Pid()).c_str();
-    processes[i].User().c_str();
-    float cpu = processes[i].CpuUtilization() * 100;
-    to_string(cpu).substr(0, 4).c_str();
-    processes[i].Ram().c_str();
-    
-    Format::ElapsedTime(processes[i].UpTime()).c_str();
+  while(1){
+    std::vector<Process> processes=system.Processes();
+    for (int i = 0; i < 15; ++i) {
+      to_string(processes[i].Pid()).c_str();
+      processes[i].User().c_str();
+      float cpu = processes[i].CpuUtilization() * 100;
+      to_string(cpu).substr(0, 4).c_str();
+      processes[i].Ram().c_str();
+      
+      Format::ElapsedTime(processes[i].UpTime()).c_str();
 
+    }
+    //refresh();
+    std::this_thread::sleep_for(std::chrono::seconds(1));
   }
   */
 
