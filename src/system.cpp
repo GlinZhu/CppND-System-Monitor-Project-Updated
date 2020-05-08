@@ -15,13 +15,43 @@ using std::vector;
 
 
 // TODO: Return the system's CPU
+//done
 Processor& System::Cpu() { 
     return cpu_; 
     
 }
 
 // TODO: Return a container composed of the system's processes
-vector<Process>& System::Processes() { return processes_; }
+vector<Process>& System::Processes() { 
+    vector<int> pids=LinuxParser::Pids();
+    //std::cout<<"the size of processes_ "<<pids.size()<<"\n";
+    set<int> pidsets;
+
+    for(Process &p:processes_){
+        pidsets.insert(p.Pid());
+    }
+    for(auto i:pids){
+        if(pidsets.find(i)==pidsets.end()){
+            Process pro;
+            pro.Int_pid(i);
+            pro.Ram();
+            processes_.emplace_back(pro);
+        }
+    }
+    for(Process &p:processes_){
+        p.Ram();
+        p.CpuUtilization();
+    }
+    std::sort(processes_.begin(), processes_.end());
+    
+    //for(int i=0;i<15;i++){
+    ///    Process proc=processes_[i];
+    //    std::cout<<"the pid "<<proc.Get_pid()<<"the ram is "<<proc.Ram()<<"\n";
+    //}
+
+    return processes_; 
+    
+}
 
 // TODO: Return the system's kernel identifier (string)
 std::string System::Kernel() { 

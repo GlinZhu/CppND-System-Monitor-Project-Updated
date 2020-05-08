@@ -11,6 +11,7 @@ float Processor::Utilization() {
     curr_total_jiff=LinuxParser::Jiffies();
     curr_active=LinuxParser::ActiveJiffies();
     utilization=static_cast<float> (curr_active-pre_active_jiffs)/(curr_total_jiff-pre_total_jiffs);
+    //utilization=static_cast<float> (curr_active)/(curr_total_jiff);
     pre_total_jiffs=curr_total_jiff;
     pre_active_jiffs=curr_active;
     return utilization;

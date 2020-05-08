@@ -93,6 +93,8 @@ void NCursesDisplay::Display(System& system, int n) {
   WINDOW* process_window =
       newwin(3 + n, x_max - 1, system_window->_maxy + 1, 0);
 
+
+  ///*
   while (1) {
     init_pair(1, COLOR_BLUE, COLOR_BLACK);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
@@ -105,5 +107,22 @@ void NCursesDisplay::Display(System& system, int n) {
     refresh();
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
+  //*/
   endwin();
+ 
+  /*
+  std::vector<Process> processes=system.Processes();
+  for (int i = 0; i < 15; ++i) {
+    to_string(processes[i].Pid()).c_str();
+    processes[i].User().c_str();
+    float cpu = processes[i].CpuUtilization() * 100;
+    to_string(cpu).substr(0, 4).c_str();
+    processes[i].Ram().c_str();
+    
+    Format::ElapsedTime(processes[i].UpTime()).c_str();
+
+  }
+  */
+
+
 }
